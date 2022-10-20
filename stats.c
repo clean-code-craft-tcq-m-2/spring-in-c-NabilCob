@@ -20,7 +20,7 @@ Stats_t compute_statistics(const float* numberset, int setlength) {
             }
             //find min
             if(s.max < numberset[idx]){
-                s.max = numberset[idx]
+                s.max = numberset[idx];
             }
         }
         s.average = sum / setlength;   
