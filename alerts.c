@@ -10,8 +10,10 @@ void check_and_alert(const float maxThreshold, alerter_funcptr alert[], int aler
     int idx;
     if(computedStats.max > maxThreshold){
        //Run a loop to call the alert function configured
-       for(idx = 0 ; idx < alerterslen; idx ++){
-           (*alert[idx])();
+       for(idx = 0 ; idx < alerterslen; idx ++){          
+            if(alert[idx] != (void*) 0){
+                (*alert[idx])();
+           }
        }
     }
 }
