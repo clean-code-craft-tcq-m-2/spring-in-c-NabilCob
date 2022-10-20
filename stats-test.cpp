@@ -1,15 +1,18 @@
 #define CATCH_CONFIG_MAIN  // This tells Catch to provide a main() - only do this in one cpp file
 
-#include "catch.hpp"
-#include "stats.h"
 
 #include <stdlib.h>
 #include <math.h>
 
+#include "catch.hpp"
+#include "stats.h"
+#include "alerts.h"
+
+
 TEST_CASE("reports average, minimum and maximum") {
     float numberset[] = {1.5, 8.9, 3.2, 4.5};
     int setlength = sizeof(numberset) / sizeof(numberset[0]);
-    struct Stats computedStats = compute_statistics(numberset, setlength);
+    Stats_t computedStats = compute_statistics(numberset, setlength);
     float epsilon = 0.001;
     REQUIRE(abs(computedStats.average - 4.525) < epsilon);
     REQUIRE(abs(computedStats.max - 8.9) < epsilon);
@@ -17,8 +20,11 @@ TEST_CASE("reports average, minimum and maximum") {
 }
 
 TEST_CASE("average is NaN for empty array") {
-    Stats computedStats = compute_statistics(0, 0);
-    //All fields of computedStats (average, max, min) must be
+    Stats_t computedStats = compute_statistics(0, 0);
+    REQUIRE(isnan(computedStats.min));
+    REQUIRE(isnan(computedStats.max));
+    REQUIRE(isnan(computedStats.average));    
+     //All fields of computedStats (average, max, min) must be
     //NAN (not-a-number), as defined in math.h
     
     //Design the REQUIRE statement here.
@@ -26,19 +32,23 @@ TEST_CASE("average is NaN for empty array") {
 }
 
 TEST_CASE("raises alerts when max is greater than threshold") {
+    
     // create additional .c and .h files
     // containing the emailAlerter, ledAlerter functions
     alerter_funcptr alerters[] = {emailAlerter, ledAlerter};
-
     float numberset[] = {99.8, 34.2, 4.5};
     int setlength = sizeof(numberset) / sizeof(numberset[0]);
-    Stats computedStats = compute_statistics(numberset, setlength);
-
     const float maxThreshold = 10.2;
-    check_and_alert(maxThreshold, alerters, computedStats);
+    int alerterslistSize = sizeof(alerters) / sizeof(alerters[0]);
+    //Compute statatics    
+    Stats_t computedStats = compute_statistics(numberset, setlength);
 
+    //Precondition -  Reset the call counters
+    emailAlertCallCount = 0;
+    ledAlertCallCount = 0;   
+    check_and_alert(maxThreshold, alerters, alerterslistSize,computedStats);  
     // need a way to check if both emailAlerter, ledAlerter were called
     // you can define call-counters along with the functions, as shown below
-    REQUIRE(emailAlertCallCount == 1);
-    REQUIRE(ledAlertCallCount == 1);
+    REQUIRE(emailAlertCallCount > 0);
+    REQUIRE(ledAlertCallCount > 0);
 }

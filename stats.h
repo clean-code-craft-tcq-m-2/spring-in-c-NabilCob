@@ -1,8 +1,15 @@
+#ifndef STATS_H_
+#define STATS_H_
 
-struct Stats compute_statistics(const float* numberset, int setlength);
+//Structure declaration for computing statistics
+typedef struct
+{  
+   float min;
+   float max;
+   float average;
+} Stats_t;
 
-typedef void (*alerter_funcptr)();
-void check_and_alert(float maxThreshold, alerter_funcptr alerters[], struct Stats computedStats);
+//Function declaration for computing statistics
+Stats_t compute_statistics(const float* numberset, int setlength);
 
-extern int emailAlertCallCount;
-extern int ledAlertCallCount;
+#endif
