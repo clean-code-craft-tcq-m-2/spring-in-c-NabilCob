@@ -1,5 +1,5 @@
-#ifndef STAT_H_
-#define STAT_H_
+#ifndef STATS_H_
+#define STATS_H_
 
 //Structure declaration for computing statistics
 typedef struct
