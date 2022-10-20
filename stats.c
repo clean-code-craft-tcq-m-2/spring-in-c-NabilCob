@@ -33,9 +33,3 @@ Stats_t compute_statistics(const float* numberset, int setlength) {
     }
     return s;
 }
-
-//Linking
-int main(void)
-{
-    return 0;
-}
