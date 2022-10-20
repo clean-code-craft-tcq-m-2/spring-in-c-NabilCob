@@ -5,13 +5,13 @@
 Stats_t compute_statistics(const float* numberset, int setlength) {
     Stats_t  s;
     int idx;
-    float sum = 0;
+    float sum;
     //Check for valid length
     if(setlength > 0){
         s.min = numberset[0];
         s.max = numberset[0];
         s.average = numberset[0];
-        
+        sum = numberset[0];
         for(idx = 1 ; idx < setlength; idx ++){
             sum = sum + numberset[idx];
             //find min
