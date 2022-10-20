@@ -1,4 +1,4 @@
-#include "math.h"
+#include <math.h>
 #include "stats.h"
 
 //Function to find the statistics of given list
