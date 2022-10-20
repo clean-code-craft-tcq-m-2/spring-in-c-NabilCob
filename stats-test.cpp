@@ -8,6 +8,10 @@
 #include "stats.h"
 #include "alerts.h"
 
+#ifdef NAN
+/* NAN is supported */
+#endif
+
 
 TEST_CASE("reports average, minimum and maximum") {
     float numberset[] = {1.5, 8.9, 3.2, 4.5};
