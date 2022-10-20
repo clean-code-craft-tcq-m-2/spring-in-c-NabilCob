@@ -3,7 +3,7 @@
 
 //Function to find the statistics of given list
 Stats_t compute_statistics(const float* numberset, int setlength) {
-    struct Stats s;
+    Stats_t  s;
     int idx;
     float sum = 0;
     //Check for valid length
